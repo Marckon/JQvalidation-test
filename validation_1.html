@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>validation_1</title>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery.validate.js"></script>
+    <style type="text/css">
+        .ok {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<p id="info"></p>
+<form align="center" id="form">
+    username:<input type="text" name="name"/><br><br>
+    password:<input type="password" name="psw" id="psw"/><br>
+    <input type="submit" align="center"/>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#form').validate(
+            {
+                rules: {
+                    name: {
+                        /*required: true,
+                         minlength: 2,
+                         maxlength: 10*/
+                        postcode: "中国"
+                    },
+                    psw: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 22
+                    }
+                },
+                //focusCleanup:true,
+                messages: {
+                    name: {
+                        required: "no name?",
+                        minlength: "too short!",
+                        maxlength: "too long!"
+                    },
+                    psw: {
+                        required: "no secrets?",
+                        minlength: "little secrets?",
+                        maxlength: "many secrets?"
+                    }
+                },
+//                groups:{
+//                    login:"name psw",
+//                },
+//                errorPlacement:function (erro, element) {
+//                   erro.appendTo($("p"));
+//                }
+                errorLabelContainer: "#info",
+                errorElement: "li",
+                Wrapper: "ul",
+//              success: function (label) {
+//                  alert("ok");
+//              }
+                //              unhighlight:function (a,b,c) {
+                //                  alert("ok");
+                //              },
+                highlight: function (ele, err, vc) {
+                    $(ele).fadeOut().fadeIn().fadeOut().fadeIn();
+                }
+
+            }
+
+        );
+        $.validator.addMethod("postcode", function (v, e, p) {
+            var postcode=/^[0-9]{6}$/;
+            console.log(p);
+            console.log(v);
+            return this.optional(e)||postcode.test(v);
+        }, $.validator.format("填写{0}邮编"))
+    })
+</script>
+</body>
+</html>

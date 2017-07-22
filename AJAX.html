@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <style type="text/css">
+        *{padding:0; margin:0; font-family:"å¾®è½¯éé»"}
+        div{
+            background-color:lightblue;
+            width:1900px;
+            height:896px;
+        }
+        h1,form{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<body>
+<div>
+    <h1>Please enter the staff's name:</h1>
+    <form method="post">
+        <input type="text" name="staffname" id="staffname"/>
+        <input type="submit" value="OK" id="submit"/>
+    </form>
+    <p id="result"></p>
+</div>
+<script type="text/javascript">
+    document.getElementById("submit").onclick=function(){
+        var request=new XMLHttpRequest();
+        request.open("post","servlet/SearchServlet");
+        var data="staffname="+document.getElementById("staffname").value;
+        request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        request.send(data);
+        request.onreadystatechange=function(){
+            if(request.readyState===4){
+                if(request.status===200){
+                    document.getElementById("result").innerHTML=request.responseText;
+                }else{
+                    alert("发生错误："+request.status);
+                }
+            }
+        }
+    }
+
+</script>
+</body>
+</body>
+</html>
